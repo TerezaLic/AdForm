@@ -1,0 +1,14 @@
+language: bash
+
+services:
+  - docker
+
+script:
+  - docker build --tag=my-application .
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: ./deploy.sh
+  on:
+    tags: true
