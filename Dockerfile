@@ -1,4 +1,4 @@
 FROM rocker/rstudio-stable:latest
-COPY ./DockerConfig/requirements.R /tmp/requirements.R 
+RUN R -e "install.packages(c('jsonlite', 'lubridate'), repos='http://cran.rstudio.com/')"
 CMD ["R"]
 MAINTAINER Tereza/@revolt.bi
