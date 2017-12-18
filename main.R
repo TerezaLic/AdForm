@@ -8,8 +8,18 @@ library(keboola.r.docker.application)
 # initialize application
 app <- DockerApplication$new('/data/')
 app$readConfig()
+
 # access the supplied value of 'myParameter'
 apiKey<-app$getParameters()$`#apiKey`
+
+# read user input data from JSON config editor
+user<-app$getParameters()$`user`
+Password<-app$getParameters()$`Password`
+dataProviderId<-app$getParameters()$`dataProviderId`
+dateFrom<-app$getParameters()$`dateFrom`
+dateTo<-app$getParameters()$`dateTo`
+out_bucket<-app$getParameters()$`bucket`
+
 
 ##Catch config errors
 
