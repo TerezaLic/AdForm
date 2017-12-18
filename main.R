@@ -2,6 +2,19 @@
 library(jsonlite)
 library(lubridate)
 
++#=======CONFIGURATION========#
+
+library(keboola.r.docker.application)
+# initialize application
+app <- DockerApplication$new('/data/')
+app$readConfig()
+# access the supplied value of 'myParameter'
+app$getParameters()$myParameter
+
+##Catch config errors
+
+if(is.null(apiKey)) stop("enter your apiKey in the user config field")
+
 #=======Actual API call========#
 # report Datausage je automaticky group by Agency
 url <- "https://api.adform.com/v2/dmp/reports/datausage"
@@ -10,7 +23,7 @@ json <- httr::content(req, as = "text")
 Datausage<-fromJSON(json)
 write.csv(Datausage,"out/tables/Datausage.csv")
 
-# report Audience vyžaduje Provider Id, Json2 file problem format
+# report Audience vyÅ¾aduje Provider Id, Json2 file problem format
 url2 <- "https://api.adform.com/v2/dmp/reports/audience?dataProviderId=11392"
 req2 <- httr::GET(url2, httr::add_headers(Authorization = ""))
 json2 <- httr::content(req2, as = "text")
