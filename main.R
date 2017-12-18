@@ -9,7 +9,7 @@ library(keboola.r.docker.application)
 app <- DockerApplication$new('/data/')
 app$readConfig()
 # access the supplied value of 'myParameter'
-app$getParameters()$myParameter
+apiKey<-app$getParameters()$`#apiKey`
 
 ##Catch config errors
 
