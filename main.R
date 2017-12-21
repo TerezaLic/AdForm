@@ -1,57 +1,56 @@
-#Install the libraries
+
+#=======Install the libraries=========#
 library(jsonlite)
 library(lubridate)
+library(httr)
 
-+#=======CONFIGURATION========#
+#=======CONFIGURATION========#
 
 library(keboola.r.docker.application)
 # initialize application
-app <- DockerApplication$new('/data/')
+app <- keboola.r.docker.application::DockerApplication$new('tests/data/')
 app$readConfig()
+
 
 # access the supplied value of 'myParameter'
 apiKey<-app$getParameters()$`#apiKey`
+dateFrom<-as.Date(app$getParameters()$dateFrom)
+dateTo<-as.Date(app$getParameters()$dateTo)
+dataProviderId<-app$getParameters()$dataProviderId
+endpoint<-app$getParameters()$report
 
-# read user input data from JSON config editor
-user<-app$getParameters()$`user`
-Password<-app$getParameters()$`Password`
-dataProviderId<-app$getParameters()$`dataProviderId`
-dateFrom<-app$getParameters()$`dateFrom`
-dateTo<-app$getParameters()$`dateTo`
-out_bucket<-app$getParameters()$`bucket`
-
+# read user input data from JSON config editor ----------TO BE UPDATED WITH new JSON form------------
+# user<-app$getParameters()$user
+# Password<-app$getParameters()$Password
+# dataProviderId<-app$getParameters()$dataProviderId
+# dateFrom<-app$getParameters()$dateFrom
+# dateTo<-app$getParameters()$dateTo
+# out_bucket<-app$getParameters()$bucket
 
 ##Catch config errors
 
 if(is.null(apiKey)) stop("enter your apiKey in the user config field")
 
+# get csv file name with full path from output mapping
+outName <- app$getExpectedOutputTables()['full_path']
+
+
 #=======Actual API call========#
+
 # report Datausage je automaticky group by Agency
-url <- "https://api.adform.com/v2/dmp/reports/datausage"
-req <- httr::GET(url, httr::add_headers(Authorization = ""))
+# report Audience vyzaduje Provider Id
+
+url <- "https://api.adform.com/"
+req <- httr::GET(url,path=endpoint,query=list(dataProviderId=dataProviderId,from=dateFrom,to=dateTo) ,httr::add_headers(Authorization = apiKey))
 json <- httr::content(req, as = "text")
 Datausage<-fromJSON(json)
-write.csv(Datausage,"out/tables/Datausage.csv")
 
-# report Audience vyžaduje Provider Id, Json2 file problem format
-url2 <- "https://api.adform.com/v2/dmp/reports/audience?dataProviderId=11392"
-req2 <- httr::GET(url2, httr::add_headers(Authorization = ""))
-json2 <- httr::content(req2, as = "text")
-Audience<-fromJSON(json2)
-write.csv(Audience,"out/tables/Audience.csv")
 
-# report Audience2
-url3 <- "https://api.adform.com/v2/dmp/dataproviders/11392/audience"
-req3 <- httr::GET(url3, httr::add_headers(Authorization = ""))
-json3 <- httr::content(req3, as = "text")
-DataProvider_audience<-fromJSON(json3)
-write.csv(DataProvider_audience,"out/tables/DataProvider_audience.csv")
+# write output data
+write.csv(Datausage,"tests/data/out/tables/result.csv",row.names = FALSE)
 
-# report billing
-url4 <- "https://api.adform.com/v2/dmp/reports/billing/overall"
-req4 <- httr::GET(url4, httr::add_headers(Authorization = ""))
-json4 <- httr::content(req4, as = "text")
-Billing<-fromJSON(json4)
-# data cleaning
-Billing$date<-ymd_hms(content4$date)
-write.csv(Billing,"out/tables/Billing.csv")
+# write table metadata
+
+
+
+
