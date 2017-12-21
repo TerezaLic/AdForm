@@ -1,4 +1,6 @@
-language: bash
+language: r
+
+sudo: required
 
 services:
   - docker
