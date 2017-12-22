@@ -6,7 +6,6 @@ services:
   
 script:
   - docker build --tag=my-application .
-  - cd $TRAVIS_BUILD_DIR
   - chmod +x ./deploy.sh
 
 
