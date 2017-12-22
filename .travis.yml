@@ -1,17 +1,19 @@
-language: r
-cache: packages
+language: bash
 
-sudo: false
+sudo: required
 
 services:
   - docker
-
-r_github_packages:
- - keboola/r-application
+  
+script:
+  - docker build --tag=my-application .
+  
+after_success:
+- docker images
 
 deploy:
   provider: script
   skip_cleanup: true
-  script: ./deploy.sh
+  script: "./deploy.sh"
   on:
     tags: true
