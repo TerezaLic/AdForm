@@ -6,6 +6,9 @@ sudo: false
 services:
   - docker
 
+r_github_packages:
+ - keboola/r-application
+
 script:
   - docker build --tag=my-application .
 
