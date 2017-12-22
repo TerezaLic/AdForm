@@ -12,3 +12,4 @@ Depends:
     lubridate,
     keboola.r.application
 Description: API extractor for Keboola.
+License: MIT + file LICENSE
