@@ -1,0 +1,14 @@
+Package: Keboola.AdForm.extractor
+Type: Package
+Title: Keboola extractor
+Version: 0.0.1
+Date: 2017-12-22
+Author: Revolt BI
+Maintainer: Tereza Lickova <Tereza@revolt.bi>
+Depends:
+    httr,
+    methods,
+    jsonlite,
+    lubridate,
+    keboola.r.application
+Description: API extractor for Keboola.
