@@ -3,5 +3,6 @@ RUN R -e "install.packages(c('jsonlite', 'lubridate','devtools'), repos='http://
 RUN R -e "install_github("keboola/r-docker-application",ref = "master")"
 RUN R -e "install_github("keboola/r-custom-application-example-package")"
 
+# Run the application
+ENTRYPOINT Rscript ./main.R /data/
 
-CMD ["R"]
