@@ -3,7 +3,10 @@ language: bash
 
 services:
   - docker
-  
+
+before_script:
+  - chmod +x ./deploy.sh
+
 script:
   - docker build --tag=my-application .
 
