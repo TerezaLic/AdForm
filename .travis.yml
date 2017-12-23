@@ -1,18 +1,20 @@
-sudo: required
 language: bash
 
 services:
   - docker
 
 script:
-- docker build -t TerezaLic/AdForm .
-    
-after_success:
-  - docker images
+  - docker build --tag=my-application .
+
 
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: "./deploy.sh"
-  on:
-    tags: true
+  
+	provider: script
+  
+	skip_cleanup: true
+  
+	script:  chmod +x ./deploy.sh
+  
+	on:
+    
+	  tags: true
