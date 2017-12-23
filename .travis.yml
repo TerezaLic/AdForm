@@ -3,14 +3,9 @@ language: bash
 
 services:
   - docker
-  
-before_script:
-- docker-compose build AdForm
 
 script:
- - >
-    docker-compose run
-    --rm
+- docker build -t TerezaLic/AdForm .
     
 after_success:
   - docker images
