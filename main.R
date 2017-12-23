@@ -1,8 +1,3 @@
-#=======Install packages==============#
-
-install.packages('devtools')
-install.packages('lubridate')
-install.packages('httr')
 
 #=======Install the libraries=========#
 library(jsonlite)
