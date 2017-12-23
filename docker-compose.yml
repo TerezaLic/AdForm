@@ -1,0 +1,10 @@
+version: '0.0.1'
+services:
+  r-transformation:
+    build: .
+    image: keboola/AdForm
+    tty: true
+    stdin_open: true
+    command: bash
+    volumes:
+      - ./:/code
