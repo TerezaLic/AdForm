@@ -1,13 +1,11 @@
+sudo: required
 language: bash
-
 
 services:
   - docker
   
 before_script:
-  - docker -v
-  - docker-compose -v
-  - docker-compose build
+- docker-compose build AdForm
 
 script:
  - >
@@ -20,6 +18,6 @@ after_success:
 deploy:
   provider: script
   skip_cleanup: true
-  script: chmod +x ./deploy.sh
+  script: "./deploy.sh"
   on:
     tags: true
