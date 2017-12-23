@@ -6,7 +6,6 @@ services:
   
 script:
   - docker build --tag=my-application .
-  - chmod +x ./deploy.sh
 
 
 deploy:
