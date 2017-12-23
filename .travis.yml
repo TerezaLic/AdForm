@@ -14,5 +14,4 @@ deploy:
   on:
     tags: true
     
-r_github_packages:
- - keboola/r-application
+
