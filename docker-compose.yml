@@ -1,6 +1,6 @@
 version: '0.0.1'
 services:
-  r-transformation:
+  AdForm:
     build: .
     image: keboola/AdForm
     tty: true
