@@ -8,13 +8,8 @@ script:
 
 
 deploy:
-  
 	provider: script
-  
-	skip_cleanup: true
-  
-	script:  chmod +x ./deploy.sh
-  
-	on:
-    
-	  tags: true
+  	skip_cleanup: true
+  	script:  chmod +x ./deploy.sh
+  	on:
+  	  tags: true
