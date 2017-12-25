@@ -1,3 +1,4 @@
+sudo: required
 language: bash
 
 services:
@@ -6,11 +7,10 @@ services:
 script:
   - docker build --tag=my-application .
 
-
 deploy:
   provider: script
   skip_cleanup: true
-  script: chmod +x ./deploy.sh
+  script: ./deploy.sh
   on:
     tags: true
     
