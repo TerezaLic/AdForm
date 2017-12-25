@@ -8,7 +8,7 @@ library(httr)
 
 library(keboola.r.docker.application)
 # initialize application
-app <- keboola.r.docker.application::DockerApplication$new('tests/data/')
+app <- keboola.r.docker.application::DockerApplication$new('/data/')
 app$readConfig()
 
 
