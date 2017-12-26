@@ -5,7 +5,7 @@ services:
   - docker
 
 script:
-  - docker build --tag=my-application .
+  - docker build --tag=${APP_IMAGE} .
 
 deploy:
   provider: script
