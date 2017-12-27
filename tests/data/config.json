@@ -25,6 +25,6 @@
 	"report":"v2/dmp/reports/datausage",
 	"#apiKey":"",
   "dateFrom":"2017-11-01",
-	"dataProviderId":"",
+	"dataProviderId":""
 	     }
 }
