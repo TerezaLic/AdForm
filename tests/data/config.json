@@ -1,0 +1,30 @@
+{
+"storage":{
+	"input":{
+		"tables":[{
+			"source":"in.c-main.tests",
+			"columns":[],
+			"destination":"",
+			"where_values":[],
+			"where_operator":"eq"
+			}]
+		},
+	"output":{
+		"tables":[{
+			"source":"result.csv",
+			"destination":"out.c-main.tests",
+			"incremental":false,
+			"primary_key":[],
+			"delete_where_values":[],
+			"delete_where_operator":"eq"
+			}]
+		}
+	},
+"parameters":{
+	"dateTo":"2017-11-30",
+	"report":"v2/dmp/reports/datausage",
+	"#apiKey":"",
+  "dateFrom":"2017-11-01",
+	"dataProviderId":11392
+	     }
+}
