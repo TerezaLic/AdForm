@@ -1,12 +1,12 @@
-language: bash
 sudo: required
-
+language: bash
 services:
   - docker
-
 script:
   - docker build --tag=my-application .
-
+  - docker build -t=my-application .
+after_success:
+- docker images
 deploy:
   provider: script
   skip_cleanup: true
