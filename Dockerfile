@@ -1,4 +1,4 @@
-FROM rocker/r-ver:3.3.4
+FROM rocker/r-ver:3.3.2
 
 COPY . /home/
 
