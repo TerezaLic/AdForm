@@ -5,6 +5,7 @@ services:
 script:
   - docker build --tag=my-application .
   - docker build -t=my-application .
+  - chmod +x ./deploy.sh
 after_success:
 - docker images
 deploy:
