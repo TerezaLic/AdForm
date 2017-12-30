@@ -5,8 +5,6 @@ services:
 before_script:
 - docker-compose build AdForm
 script: docker-compose run --rm --entrypoint sh -e KBC_DATA_DIR=/code/tests/data/
-  AdForm /code/run_tests.sh
-script:
   - docker build --tag=my-application .
   - docker build -t=my-application .
   
