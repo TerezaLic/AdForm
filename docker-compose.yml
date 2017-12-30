@@ -1,6 +1,6 @@
 version: '2'
 services:
-  AdForm:
+  adform:
     build: .
     image: TerezaLic/adform
     tty: true
