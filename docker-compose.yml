@@ -2,7 +2,7 @@ version: '2'
 services:
   adform:
     build: .
-    image: TerezaLic/adform
+    image: keboola/adform
     tty: true
     stdin_open: true
     command: bash
