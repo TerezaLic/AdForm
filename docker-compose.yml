@@ -1,0 +1,10 @@
+version: '2'
+services:
+  AdForm:
+    build: .
+    image: TerezaLic/AdForm
+    tty: true
+    stdin_open: true
+    command: bash
+    volumes:
+      - ./:/code
