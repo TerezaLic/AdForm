@@ -6,7 +6,7 @@ before_script:
 - docker-compose build adform
 script: docker-compose run --rm --entrypoint sh -e KBC_DATA_DIR=/code/tests/data/
    adform /code/run_tests.sh
-  
+   - docker build --tag=${APP_IMAGE}
 after_success:
 - docker images
 deploy:
