@@ -48,10 +48,10 @@
 		"#apiKey":{
 			"type":"string",
 			"propertyOrder":5000
-			},
+			}
+	},
 	"required": [
        		"dateFrom","dateTo", "dataProviderId","groupBy","#apiKey" 
 	]
-	}
 }
 	
