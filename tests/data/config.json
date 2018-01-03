@@ -2,10 +2,6 @@
 	"type":"object",
 	"title":"AdForm DMP extractor",
 	"properties":{
-		"#apiKey":{
-			"type":"string",
-			"propertyOrder":5000
-			},
 		"dateFrom":{
 			"type":"string",
 			"title":"date from",
@@ -49,8 +45,12 @@
        			"default": "none",
         		"propertyOrder":4000
 		},
+		"#apiKey":{
+			"type":"string",
+			"propertyOrder":5000
+			},
 	"required": [
-        "#apiKey", "dateTo","dateFrom", "dataProviderId","groupBy"
+       		"dateFrom","dateTo", "dataProviderId","groupBy","#apiKey", 
 	]
 	}
 }
