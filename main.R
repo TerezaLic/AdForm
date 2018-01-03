@@ -1,14 +1,14 @@
 
+
 #=======Install the libraries=========#
-library(jsonlite)
 library(lubridate)
 library(httr)
+library('keboola.r.docker.application')
 
 #=======CONFIGURATION========#
 
-library(keboola.r.docker.application)
 # initialize application
-app <- keboola.r.docker.application::DockerApplication$new('tests/data/')
+app <- keboola.r.docker.application::DockerApplication$new('/data/')
 app$readConfig()
 
 
@@ -17,6 +17,7 @@ apiKey<-app$getParameters()$`#apiKey`
 dateFrom<-app$getParameters()$dateFrom
 dateTo<-app$getParameters()$dateTo
 dataProviderId<-app$getParameters()$dataProviderId
+grouping<-app$getParameters()$groupBy
 ContentType<-"text/csv"
 
 # read user input data from JSON config editor ----------TO BE UPDATED WITH new JSON form------------
@@ -37,12 +38,12 @@ url <- "https://api.adform.com/"
 
 
 endpoint1<-"v2/dmp/reports/datausage"
-req1 <- httr::GET(url,path=endpoint1,query=list(dataProviderId=dataProviderId,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
+req1 <- httr::GET(url,path=endpoint1,query=list(groupBy=grouping,dataProviderId=dataProviderId,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
 datausage<-httr::content(req1, as="parse")
 write.csv(datausage,"tests/data/in/tables/datausage.csv",row.names = FALSE)
 
 endpoint2<-"v2/dmp/reports/audience"
-req2 <- httr::GET(url,path=endpoint2,query=list(dataProviderId=dataProviderId,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
+req2 <- httr::GET(url,path=endpoint2,query=list(groupBy=grouping,dataProviderId=dataProviderId,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
 audience<-httr::content(req2, as="parse")
 write.csv(audience,"tests/data/in/tables/audience.csv",row.names = FALSE)
 
