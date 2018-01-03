@@ -1,17 +1,9 @@
+{
 	"type":"object",
 	"title":"AdForm DMP extractor",
 	"properties":{
-		"#apiKey":"",
-		"report":{
-			"enum":[
-				"v2/dmp/reports/datausage",
-				"v2/dmp/reports/audience",
-				"v2/dmp/report/dataproviders/audience",
-				"v2/dmp/reports/billing/overall"
-				],
+		"#apiKey":{
 			"type":"string",
-			"default":"v2/dmp/reports/datausage",
-			"propertyOrder":1000
 			},
 		"dateFrom":{
 			"type":"string",
@@ -19,7 +11,7 @@
 			"default":"2017-12-01",
 			"minLength":10,
 			"description":"Date in format YYYY-MM-DD",
-			"propertyOrder":2000
+			"propertyOrder":1000
 				},
 		"dateTo":{
 			"type":"string",
@@ -27,16 +19,38 @@
 			"default":"2018-12-31",
 			"minLength":10,
 			"description":"Date in format YYYY-MM-DD",
-			"propertyOrder":3000
+			"propertyOrder":2000
 			},
 		"dataProviderId":{
 			"type":"string",
 			"title":"data provider Id",
 			"default":"",
-			"propertyOrder":4000
-				}
+			"propertyOrder":3000
+				},
+		"groupBy":{      
+      			"type": "string",
+      			"enum": [
+        			"agency",
+        			"advertiser",
+        			"segment",
+        			"date",
+        			"country",
+        			"domain",
+        			"dataProvider",
+       				"none",
+        			"source",
+        			"contract",
+        			"campaign",
+        			"campaignCurrency",
+        			"order",
+        			"lineItem"
+     		 ],
+       			"default": "none",
+        		"propertyOrder":4000
 		},
 	"required": [
-        "dateTo", "report", "#apiKey", "dateFrom", "dataProviderId"
+        "#apiKey", "dateTo","dateFrom", "dataProviderId"
 	]
+	}
 }
+	
