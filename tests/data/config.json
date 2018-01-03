@@ -45,4 +45,7 @@
         "propertyOrder":4000
     }
   }
+"required": [
+        "#apiKey","dateTo", "dateFrom", "dataProviderId","groupBy"
+	]
 }
