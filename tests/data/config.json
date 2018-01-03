@@ -50,7 +50,7 @@
 			"propertyOrder":5000
 			},
 	"required": [
-       		"dateFrom","dateTo", "dataProviderId","groupBy","#apiKey", 
+       		"dateFrom","dateTo", "dataProviderId","groupBy","#apiKey" 
 	]
 	}
 }
