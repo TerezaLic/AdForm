@@ -1,28 +1,42 @@
-{
-  "title": "AdForm DMP extractor",
-  "type": "object",
-  "properties": {
-    "#apiKey": "",
-    "dateTo": {
-      "type": "Date",
-      "description": "Date in format YYYY-MM-DD",
-      "minLength": 10,
-      "default": "2018-12-31",
-      "propertyOrder":1000
-    },
-    "dateFrom": {
-      "type": "Date",
-      "description": "Date in format YYYY-MM-DD",
-      "minLength": 10,
-      "default": "2017-12-01",
-      "propertyOrder":2000
-    },
-    "dataProviderId": {
-      "type": "string",
-      "default": "11392",
-      "propertyOrder":3000
-    },
-"required": [
-        "#apiKey","dateTo", "dateFrom", "dataProviderId"
+	"type":"object",
+	"title":"AdForm DMP extractor",
+	"properties":{
+		"#apiKey":"",
+		"report":{
+			"enum":[
+				"v2/dmp/reports/datausage",
+				"v2/dmp/reports/audience",
+				"v2/dmp/report/dataproviders/audience",
+				"v2/dmp/reports/billing/overall"
+				],
+			"type":"string",
+			"default":"v2/dmp/reports/datausage",
+			"propertyOrder":1000
+			},
+		"dateFrom":{
+			"type":"string",
+			"title":"date from",
+			"default":"2017-12-01",
+			"minLength":10,
+			"description":"Date in format YYYY-MM-DD",
+			"propertyOrder":2000
+				},
+		"dateTo":{
+			"type":"string",
+			"title":"date to",
+			"default":"2018-12-31",
+			"minLength":10,
+			"description":"Date in format YYYY-MM-DD",
+			"propertyOrder":3000
+			},
+		"dataProviderId":{
+			"type":"string",
+			"title":"data provider Id",
+			"default":"",
+			"propertyOrder":4000
+				}
+		},
+	"required": [
+        "dateTo", "report", "#apiKey", "dateFrom", "dataProviderId"
 	]
 }
