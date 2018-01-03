@@ -3,7 +3,7 @@
 	"title":"AdForm DMP extractor",
 	"properties":{
 		"#apiKey":{
-			"type":"string",
+			"type":"string"
 			},
 		"dateFrom":{
 			"type":"string",
