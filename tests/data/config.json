@@ -2,7 +2,7 @@
   "title": "AdForm DMP extractor",
   "type": "object",
   "properties": {
-    "#apiKey": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1laWQiOiJkZGVmMWY4My03NDQ5LTRmNmUtOTNmYS0yMzhhN2NiNDVjYmUiLCJ1bmlxdWVfbmFtZSI6InNlem5hbV9hcGkiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL2FjY2Vzc2NvbnRyb2xzZXJ2aWNlLzIwMTAvMDcvY2xhaW1zL2lkZW50aXR5cHJvdmlkZXIiOiJBU1AuTkVUIElkZW50aXR5IiwiQWRmb3JtLkRNUC5DbGFpbXM6OkRhdGFQcm92aWRlcnMiOiJbMTEzOTJdIiwicm9sZSI6InVzZXIiLCJpc3MiOiJkbXAtYXBpLmFkZm9ybS5jb20iLCJhdWQiOiJkbXBfdXNlcnMiLCJleHAiOjE1MTQ5NDYwOTgsIm5iZiI6MTUxNDkxNzIzOH0.I1CszN_qoUzjcQX0jgbA_olJj4YenehdEC2mSWjYmAg",
+    "#apiKey": "",
     "dateTo": {
       "type": "Date",
       "description": "Date in format YYYY-MM-DD",
