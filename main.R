@@ -27,7 +27,7 @@ dataProviderId<-"11392"
 # get session token
 
 url <- "https://api.adform.com/"
-req <- httr::POST(url,path="v1/dmp/token",body=list(grant_type="password",username="",password=""),encode = "form")
+req <- httr::POST(url,path="v1/dmp/token",body=list(grant_type="password",username=user,password=pass),encode = "form")
 json <- httr::content(req, as = "text")
 returnData<-fromJSON(json)
 apiKey <- paste("Bearer ",returnData$access_token)
