@@ -3,12 +3,12 @@
 library(lubridate)
 library(httr)
 library(jsonlite)
-library('keboola.r.docker.application')
+library(keboola.r.docker.application)
 
 #=======CONFIGURATION========#
 
 # initialize application
-app <- keboola.r.docker.application::DockerApplication$new('/data/')
+app <- DockerApplication$new('/data/')
 app$readConfig()
 
 
