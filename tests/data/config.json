@@ -18,12 +18,6 @@
 			"description":"Date in format YYYY-MM-DD",
 			"propertyOrder":2000
 			},
-		"dataProviderId":{
-			"type":"string",
-			"title":"data provider Id",
-			"default":"",
-			"propertyOrder":3000
-				},
 		"groupBy":{      
       			"type": "string",
       			"enum": [
@@ -45,13 +39,17 @@
        			"default": "none",
         		"propertyOrder":4000
 		},
-		"#apiKey":{
+		"user":{
 			"type":"string",
 			"propertyOrder":5000
+			},
+		"#pass":{
+			"type":"string",
+			"propertyOrder":6000
 			}
 	},
 	"required": [
-       		"dateFrom","dateTo", "dataProviderId","groupBy","#apiKey" 
+       		"dateFrom","dateTo", "groupBy","user","#pass" 
 	]
 }
 	
