@@ -46,7 +46,7 @@ get_report_param<-function(endpoint){
   req<- httr::GET(url,path=endpoint,query=list(groupBy=grouping,dataProviderId=pid,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
   datasource<-httr::content(req, as="parse")
   fname=basename(endpoint)
-  csvFileName<-paste("data/out/tables/",fname,"_",grouping,".csv",sep = "")
+  csvFileName<-paste("/data/out/tables/",fname,"_",grouping,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
 }
 
@@ -56,7 +56,7 @@ get_report<-function(endpoint){
   req<- httr::GET(url,path=endpoint,query=list(dataProviderId=pid,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
   datasource<-httr::content(req, as="parse")
   fname=basename(endpoint)
-  csvFileName<-paste("data/out/tables/",fname,".csv",sep = "")
+  csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
 }
 
