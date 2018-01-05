@@ -57,8 +57,8 @@ get_report(endpoint1)
 endpoint2<-("v2/dmp/reports/audience")
 get_report(endpoint2)
 
-endpoint3<-("/v2/dmp/dataproviders/{dataProviderId}/audience")
-get_report(endpoint3)
+# endpoint3<-("/v2/dmp/dataproviders/{dataProviderId}/audience")
+# get_report(endpoint3)
 
 endpoint4<-("v2/dmp/reports/billing/overall")
 get_report(endpoint4)
