@@ -5,6 +5,7 @@ library(httr)
 library(jsonlite)
 library('keboola.r.docker.application')
 library(purrr)
+library(dplyr)
 
 #=======CONFIGURATION========#
 
@@ -40,25 +41,34 @@ if (req$status_code != 200) stop("unauthorized - verify username & password")
 pIdata<-GET(url,path="/v1/dmp/dataproviders",add_headers(Authorization = apiKey))%>%content("text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
 pid<-pIdata[["id"]]
 
+# define API function with grouping parameter
+get_report_param<-function(endpoint){
+  req<- httr::GET(url,path=endpoint,query=list(groupBy=grouping,dataProviderId=pid,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
+  datasource<-httr::content(req, as="parse")
+  fname=basename(endpoint)
+  csvFileName<-paste("data/out/tables/",fname,"_",grouping,".csv",sep = "")
+  write.csv(datasource,file=csvFileName,row.names = FALSE)
+}
 
-# define API function
+
+# define API function w/o  parameter
 get_report<-function(endpoint){
-   req<- httr::GET(url,path=endpoint,query=list(groupBy=grouping,dataProviderId=pid,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
-   datasource<-httr::content(req, as="parse")
-   fname=basename(endpoint)
-   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
-   write.csv(datasource,file=csvFileName,row.names = FALSE)
+  req<- httr::GET(url,path=endpoint,query=list(dataProviderId=pid,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
+  datasource<-httr::content(req, as="parse")
+  fname=basename(endpoint)
+  csvFileName<-paste("data/out/tables/",fname,".csv",sep = "")
+  write.csv(datasource,file=csvFileName,row.names = FALSE)
 }
 
 # data load
 endpoint1<-("v2/dmp/reports/datausage")
-get_report(endpoint1)
+get_report_param(endpoint1)
 
 endpoint2<-("v2/dmp/reports/audience")
-get_report(endpoint2)
+get_report_param(endpoint2)
 
-# endpoint3<-("/v2/dmp/dataproviders/{dataProviderId}/audience")
-# get_report(endpoint3)
+endpoint3<-("/v2/dmp/dataproviders/{dataProviderId}/audience")
+get_report(endpoint3)
 
 endpoint4<-("v2/dmp/reports/billing/overall")
 get_report(endpoint4)
