@@ -37,7 +37,7 @@ if (req$status_code != 200) stop("unauthorized - verify username & password")
 
 
 # get list of data providers
-pIdata<-GET(url,path=endpoint0,add_headers(Authorization = apiKey))%>%content("text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
+pIdata<-GET(url,path="/v1/dmp/dataproviders",add_headers(Authorization = apiKey))%>%content("text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
 pid<-pIdata[["id"]]
 
 
