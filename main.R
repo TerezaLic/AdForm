@@ -21,8 +21,7 @@ grouping<-app$getParameters()$groupBy
 ContentType<-"text/csv"
 user<-app$getParameters()$user
 password<-app$getParameters()$'#pass'
- # get file name from output mapping
-outDestination <- app$getExpectedOutputTables()$bucket
+outDestination <- app$getParameters()$bucket
 
 #=======Actual API call========#
 
