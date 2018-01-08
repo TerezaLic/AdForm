@@ -21,7 +21,8 @@ grouping<-app$getParameters()$groupBy
 ContentType<-"text/csv"
 user<-app$getParameters()$user
 password<-app$getParameters()$'#pass'
-
+ # get file name from output mapping
+outDestination <- app$getExpectedOutputTables()$bucket
 
 #=======Actual API call========#
 
@@ -50,6 +51,8 @@ get_report<-function(endpoint){
     fname=basename(endpoint)
     csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
     write.csv(datasource,file=csvFileName,row.names = FALSE)
+    # write table metadata
+    app$writeTableManifest(csvFileName, destination = outDestination)
 }
 
 # define API function with ProviderId parameter
@@ -61,6 +64,8 @@ get_report_pId<-function(pid,endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
+  # write table metadata
+  app$writeTableManifest(csvFileName, destination = outDestination)  
 }
 
 # define API function with ProviderId & Group by parameters
@@ -72,6 +77,8 @@ get_report_pIdGb<-function(pid,endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_",grouping,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
+  # write table metadata
+    app$writeTableManifest(csvFileName, destination = outDestination)  
 }
 
 # define API function with ProviderId & Group by parameters
@@ -85,6 +92,8 @@ get_report_pIdGb2<-function(pid,endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_",grouping,".csv",sep = "")
   write.csv(df,file=csvFileName,row.names = FALSE)
+  # write table metadata
+  app$writeTableManifest(csvFileName, destination = outDestination)  
 }
 
 # data load
