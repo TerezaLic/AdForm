@@ -39,6 +39,12 @@
        			"default": "none",
         		"propertyOrder":4000
 		},
+		"bucket": {
+			"propertyOrder": 4500,
+			"title": "Output bucket",
+			"type": "string",
+			"description": "Result Storage bucket path."
+		},
 		"user":{
 			"type":"string",
 			"propertyOrder":5000
@@ -49,7 +55,7 @@
 			}
 	},
 	"required": [
-       		"dateFrom","dateTo", "groupBy","user","#pass" 
+       		"dateFrom","dateTo", "groupBy","bucket","user","#pass" 
 	]
 }
 	
