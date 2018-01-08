@@ -43,7 +43,7 @@
 			"propertyOrder": 4500,
 			"title": "Output bucket",
 			"type": "string",
-			"description": "Result Storage bucket path.(example: in.c-main)"
+			"description": "Result Storage bucket path.(example: out.c-main)"
 		},
 		"user":{
 			"type":"string",
