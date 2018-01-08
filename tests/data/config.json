@@ -47,10 +47,12 @@
 		},
 		"user":{
 			"type":"string",
+			"description":"AdForm user name",
 			"propertyOrder":5000
 			},
 		"#pass":{
 			"type":"string",
+			"description":"AdForm password",
 			"propertyOrder":6000
 			}
 	},
