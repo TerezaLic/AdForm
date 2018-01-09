@@ -21,7 +21,7 @@ grouping<-app$getParameters()$groupBy
 ContentType<-"text/csv"
 user<-app$getParameters()$user
 password<-app$getParameters()$'#pass'
-outDestination <- app$getParameters()$destination
+#outDestination <- app$getParameters()$destination
 
 #=======Actual API call========#
 
