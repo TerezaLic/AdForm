@@ -24,6 +24,10 @@ user<-app$getParameters()$user
 password<-app$getParameters()$'#pass'
 outDestination <- app$getParameters()$bucket
 
+client <- SapiClient$new(
+    token = 'your-token'
+)
+
 #=======Actual API call========#
 
 # get session token
