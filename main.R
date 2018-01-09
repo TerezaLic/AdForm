@@ -4,6 +4,7 @@ library(lubridate)
 library(httr)
 library(jsonlite)
 library('keboola.r.docker.application')
+library('keboola.sapi.r.client')
 library(purrr)
 library(foreach)
 
