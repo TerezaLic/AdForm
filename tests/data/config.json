@@ -46,10 +46,16 @@
 		"#pass":{
 			"type":"string",
 			"propertyOrder":6000
+			},
+		"bucket" : {
+			"title": "Output bucket",
+			"type": "string",
+			"minLength": 1,
+			"description": "out.c-AdForm"
 			}
 	},
 	"required": [
-       		"dateFrom","dateTo", "groupBy","user","#pass" 
+       		"dateFrom","dateTo", "groupBy","user","#pass", "bucket" 
 	]
 }
 	
