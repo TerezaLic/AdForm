@@ -21,7 +21,7 @@ dateTo<-app$getParameters()$dateTo
 grouping<-app$getParameters()$groupBy
 ContentType<-"text/csv"
 user<-app$getParameters()$user
-password<-app$getParameters()$'#pass'
+password<-app$getParameters()$'#password'
 #outDestination <- app$getParameters()$bucket
 
 
