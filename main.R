@@ -22,12 +22,8 @@ grouping<-app$getParameters()$groupBy
 ContentType<-"text/csv"
 user<-app$getParameters()$user
 password<-app$getParameters()$'#pass'
-outDestination <- app$getParameters()$bucket
-token<-app$getParameters()$'#SAPI_token'
+#outDestination <- app$getParameters()$bucket
 
-client <- SapiClient$new(
-    token = token
-)
 
 #=======Actual API call========#
 
@@ -55,12 +51,8 @@ get_report<-function(endpoint){
     datasource<-httr::content(req, as="parse")
     fname=basename(endpoint)
     csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
-table <- client$saveTable(
-    df = datasource,
-    bucket = outDestination,
-    tableName = csvFileName
 )
-    #write.csv(datasource,file=csvFileName,row.names = FALSE)
+    write.csv(datasource,file=csvFileName,row.names = FALSE)
     # write table metadata
     # app$writeTableManifest(csvFileName, destination = tableId)
 }
@@ -73,12 +65,8 @@ get_report_pId<-function(pid,endpoint){
   }
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
-  table <- client$saveTable(
-    df = datasource,
-    bucket = outDestination,
-    tableName = csvFileName
 )  
-  # write.csv(datasource,file=csvFileName,row.names = FALSE)
+  write.csv(datasource,file=csvFileName,row.names = FALSE)
   # write table metadata
   # app$writeTableManifest(csvFileName, destination = tableId)  
 }
@@ -91,12 +79,8 @@ get_report_pIdGb<-function(pid,endpoint){
   }
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_",grouping,".csv",sep = "")
-    table <- client$saveTable(
-    df = datasource,
-    bucket = outDestination,
-    tableName = csvFileName
 )
-  # write.csv(datasource,file=csvFileName,row.names = FALSE)
+  write.csv(datasource,file=csvFileName,row.names = FALSE)
   # write table metadata
   # app$writeTableManifest(csvFileName, destination = tableId)  
 }
@@ -111,12 +95,8 @@ get_report_pIdGb2<-function(pid,endpoint){
   }
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_",grouping,".csv",sep = "")
-    table <- client$saveTable(
-    df = datasource,
-    bucket = outDestination,
-    tableName = csvFileName
 )
-  # write.csv(df,file=csvFileName,row.names = FALSE)
+  write.csv(df,file=csvFileName,row.names = FALSE)
   # write table metadata
   # app$writeTableManifest(csvFileName, destination = tableId)  
 }
