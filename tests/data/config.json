@@ -44,28 +44,14 @@
 			"title":"AdForm user account",
 			"propertyOrder":5000
 			},
-		"#pass":{
+		"#password":{
 			"type":"string",
 			"title":"password",
 			"propertyOrder":6000
-			},
-		"bucket" : {
-			"title": "Output bucket",
-			"type": "string",
-			"minLength": 1,
-			"description": "out.c-AdForm",
-			"propertyOrder":8000
-			},
-		"SAPI_token" : {
-			"title": "Keboola storage token",
-			"type": "string",
-			"minLength": 1,
-			"description": "Go to storage-bucket-access token. Bucket permissions:write needed.",
-			"propertyOrder":8500
 			}
 	},
 	"required": [
-       		"dateFrom","dateTo", "groupBy","user","#pass", "bucket", "SAPI_token"
+       		"dateFrom","dateTo", "groupBy","user","#password"
 	]
 }
 	
