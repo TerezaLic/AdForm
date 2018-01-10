@@ -23,9 +23,10 @@ ContentType<-"text/csv"
 user<-app$getParameters()$user
 password<-app$getParameters()$'#pass'
 outDestination <- app$getParameters()$bucket
+token<-app$getParameters()$'#SAPI_token'
 
 client <- SapiClient$new(
-    token = 'your-token'
+    token = token
 )
 
 #=======Actual API call========#
