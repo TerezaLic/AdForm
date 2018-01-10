@@ -51,7 +51,6 @@ get_report<-function(endpoint){
     datasource<-httr::content(req, as="parse")
     fname=basename(endpoint)
     csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
-)
     write.csv(datasource,file=csvFileName,row.names = FALSE)
     # write table metadata
     # app$writeTableManifest(csvFileName, destination = tableId)
@@ -65,7 +64,6 @@ get_report_pId<-function(pid,endpoint){
   }
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
-)  
   write.csv(datasource,file=csvFileName,row.names = FALSE)
   # write table metadata
   # app$writeTableManifest(csvFileName, destination = tableId)  
@@ -79,7 +77,6 @@ get_report_pIdGb<-function(pid,endpoint){
   }
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_",grouping,".csv",sep = "")
-)
   write.csv(datasource,file=csvFileName,row.names = FALSE)
   # write table metadata
   # app$writeTableManifest(csvFileName, destination = tableId)  
@@ -95,7 +92,6 @@ get_report_pIdGb2<-function(pid,endpoint){
   }
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_",grouping,".csv",sep = "")
-)
   write.csv(df,file=csvFileName,row.names = FALSE)
   # write table metadata
   # app$writeTableManifest(csvFileName, destination = tableId)  
