@@ -41,10 +41,12 @@
 		},
 		"user":{
 			"type":"string",
+			"title":"AdForm user account",
 			"propertyOrder":5000
 			},
 		"#pass":{
 			"type":"string",
+			"title":"password",
 			"propertyOrder":6000
 			},
 		"bucket" : {
