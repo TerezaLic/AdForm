@@ -7,16 +7,16 @@
 			"title":"date from",
 			"default":"2017-12-01",
 			"minLength":10,
-			"description":"Date in format YYYY-MM-DD",
-			"propertyOrder":1000
+			"description":"Start period. Date in format YYYY-MM-DD",
+			"propertyOrder":3000
 				},
 		"dateTo":{
 			"type":"string",
 			"title":"date to",
 			"default":"2018-12-31",
 			"minLength":10,
-			"description":"Date in format YYYY-MM-DD",
-			"propertyOrder":2000
+			"description":"End period. Date in format YYYY-MM-DD.The maximum period is 3 months from the current day.",
+			"propertyOrder":4000
 			},
 		"groupBy":{      
       			"type": "string",
@@ -37,17 +37,18 @@
         			"lineItem"
      		 ],
        			"default": "date",
-        		"propertyOrder":4000
+			"description":"Query parameter Group by - select the required aggregation.",
+        		"propertyOrder":5000
 		},
 		"user":{
 			"type":"string",
 			"title":"AdForm user account",
-			"propertyOrder":5000
+			"propertyOrder":1000
 			},
 		"#password":{
 			"type":"string",
 			"title":"password",
-			"propertyOrder":6000
+			"propertyOrder":2000
 			}
 	},
 	"required": [
