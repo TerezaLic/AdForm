@@ -53,7 +53,7 @@ get_report<-function(endpoint){
     csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
     write.csv(datasource,file=csvFileName,row.names = FALSE)
     # write table metadata - set new primary key
-    app$writeTableManifest(csvFileName,destination=csvFileName ,primaryKey =c('Date'))
+    # app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Date'))
 }
 
 # define API function with ProviderId parameter
@@ -65,8 +65,6 @@ get_report_pId<-function(pid,endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
-    # write table metadata - set new primary key
-    app$writeTableManifest(csvFileName,destination =''  ,primaryKey = c('Date'))
 }
 
 # define API function with ProviderId & Group by parameters
