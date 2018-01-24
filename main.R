@@ -1,12 +1,12 @@
 
 #=======Install the libraries=========#
-library(lubridate)
-library(httr)
-library(jsonlite)
+library(lubridate,quietly = TRUE)
+library(httr, quietly = TRUE)
+library(jsonlite, quietly = TRUE)
 library('keboola.r.docker.application')
-library('keboola.sapi.r.client')
-library(purrr)
-library(foreach)
+library('keboola.sapi.r.client', quietly = TRUE)
+library(purrr, quietly = TRUE)
+library(foreach, quietly = TRUE)
 
 #=======CONFIGURATION========#
 
