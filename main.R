@@ -93,7 +93,9 @@ get_report_pIdGb2<-function(pid,endpoint){
 
 # data load
 get_report(endpoint="v2/dmp/reports/billing/overall")
+get_report(endpoint="v1/dmp/segments")
 get_report_pId(endpoint="/v2/dmp/dataproviders/{dataProviderId}/audience",pid)
+get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/segments",pid)
 get_report_pIdGb(endpoint="v2/dmp/reports/datausage",pid)
 get_report_pIdGb2(endpoint="v2/dmp/reports/audience",pid)
 
