@@ -63,7 +63,7 @@ get_report_pId<-function(pid,endpoint){
     datasource<-httr::content(req, as="parse")
   }
   fname=basename(endpoint)
-  csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
+  csvFileName<-paste("/data/out/tables/",fname,"_by_PID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
 }
 
