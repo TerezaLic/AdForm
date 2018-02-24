@@ -31,7 +31,7 @@ textstr<-app$getParameters()$text
 filterUI<-app$getParameters()$filter
 
 ContentType<-"text/csv"
-#outDestination <- app$getParameters()$bucket
+#outDestination <- app$getParameters()$bucke
 
 #=======Actual API call========#
 
@@ -45,6 +45,10 @@ apiKey <- paste("Bearer ",returnData$access_token)
 
 # catch login errors
 if (req$status_code != 200) stop("unauthorized - verify username & password")
+
+# get list of data providers
+pIdata<-GET(url,path="/v1/dmp/dataproviders",add_headers(Authorization = apiKey))%>%content("text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
+pid<-pIdata[["id"]]
 
 
 #=======DEFINE FUNCTIONS========#
@@ -231,7 +235,7 @@ get_report_datausage<-function(endpoint){
 
 ## get list of dataProviders Is  
 get_report(endpoint="/v1/dmp/dataproviders")
-pid<-get_Id_list("/data/out/tables/dataproviders.csv")                                  
+#pid<-get_Id_list("/data/out/tables/dataproviders.csv")                                  
 
 get_report(endpoint="/v1/dmp/agencies")
 
