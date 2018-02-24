@@ -156,9 +156,12 @@ get_report_dcId<-function(dcid,endpoint){
 # define API function with segment ID parameter / JSON
 get_report_SId<-function(sid,endpoint){
    # if/else to implement UI filters (teststr, Id, filterUI)
-    if(filterUI=="category"){
-      sid<-get_Id_list("data/out/tables/segments_by_CID.csv")
-          } 
+    if(filterUI=="category" & !(id=="(All)")){
+            sid<-get_Id_list("out/tables/segments_by_CID.csv")
+    } 
+    else if (filterUI=="category" & !(textstr=="(All)")){
+            sid<-get_Id_list("out/tables/segments_by_CID.csv")
+    } 
     else if (filterUI=="segment/audience" & !(id=="(All)") & textstr=="(All)"){
             sid<-id
     } 
