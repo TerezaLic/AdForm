@@ -24,6 +24,7 @@ dateFrom<-app$getParameters()$dateFrom
 dateTo<-app$getParameters()$dateTo
 user<-app$getParameters()$user
 password<-app$getParameters()$'#password'
+# default values for filters = (All), considered below as "select_all" / no filtering
 id<-app$getParameters()$id
 textstr<-app$getParameters()'$text'
 #3 options for filter: "category", "data consumers", "segment/audience"
@@ -48,19 +49,19 @@ if (req$status_code != 200) stop("unauthorized - verify username & password")
 
 #=======DEFINE FUNCTIONS========#
 
-# funciton to clean nested Json / df with list col
+# funciton to clean nested Json / split list values into more columns
 flatten<-function (l) {
   if (!is.list(l)) return(l)
   do.call('rbind', lapply(l, function(x) `length<-`(x, max(lengths(l)))))
 }
-# ?? různá délka outputu problém pro KBC
+# ?? různá délka outputu problém pro KBC, zatím poznámka do user dokumentace
                 
 # get list of Ids
 get_Id_list<-function(file){
   read.csv(file,sep = ",")[ ,1]
 }                          
 
-# get list of Ids+ Names (needed for UI filtering)
+# get list of Ids & Names (needed for UI filtering)
 get_SID_list<-function(file){
   read.csv(file,sep = ",")[ ,c(1, 8)]
 }            
@@ -80,6 +81,7 @@ get_report<-function(endpoint){
 get_report_pId<-function(pid,endpoint,filterType){
   datasource<-foreach(i=pid,.combine='rbind',.multicombine = TRUE)%dopar%{
     req<-httr::GET(url,path=endpoint,query=list(dataProviderId=i) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
+    # if/else to implement UI filters (teststr, Id, filterUI)
     if(filterType==filterUI & !(id=="(All)") & textstr=="(All)"){
       datasource<-httr::content(req, as="parse")%>%filter(Id == id)
     }  else if (filterType==filterUI & id=="(All)" & !(textstr=="(All)")){
@@ -101,6 +103,7 @@ get_report_audience<-function(pid,endpoint){
     req<-httr::GET(url,path=endpoint,query=list(groupBy="date",dataProviderId=i,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
     datasource<-httr::content(req, as="parse")
     df<-as.data.frame(datasource)
+     # if/else to implement UI filters (teststr, Id, filterUI)
       if (filterUI=="category"){
           sid<-get_Id_list("out/tables/segments_by_CID.csv")
           df<-subset(df, `Audience ID` %in% sid)
@@ -152,7 +155,7 @@ get_report_dcId<-function(dcid,endpoint){
 
 # define API function with segment ID parameter / JSON
 get_report_SId<-function(sid,endpoint){
-  
+   # if/else to implement UI filters (teststr, Id, filterUI)
     if(filterUI=="category"){
       sid<-get_Id_list("out/tables/segments_by_CID.csv")
           } 
@@ -188,6 +191,8 @@ get_report_datausage<-function(endpoint){
   datasource_l<-lapply(datasource, flatten)
   datasource<-do.call(data.frame,datasource_l)
   rm(datasource_l)
+  # Unknown number of Segment Ids columns added by "flatten" function - nested Json cleaning.
+  # Define them in SegmentCols and use to filter UI segment Id
   SegmentCols<-(datasource[,grepl("^segmentIds",colnames(datasource))])
       if (filterUI=="category"){
       sid<-as.numeric(get_Id_list("out/tables/segments_by_CID.csv"))
