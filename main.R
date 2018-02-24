@@ -175,7 +175,8 @@ get_report_SId<-function(sid,endpoint){
     else {
     # if filterUI is not "category"or "segment/audience" then assign NULL to prevent performance issue (cycling 500 possibilites one by one)
           sid<-'no selection'
-          write(paste0("No specific segment / audience Id selected"), stdout())
+          #Writing a message to the console
+          write(paste0("No specific segment / audience Id selected. Reports audience/comparison, audience/dynamics and audience/totals will be empty."), stdout())
           }
     
   
