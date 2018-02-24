@@ -236,12 +236,12 @@ pid<-get_Id_list( "/data/out/tables/dataproviders.csv")
 get_report(endpoint="/v1/dmp/agencies")
 
 ## use dataProvidersId as selection
-get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/advertisers",pid,filterType=FALSE)
+get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/advertisers",pid,filterType="0")
 
 
 get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/categories",pid, filterType="category")
 get_report_pId(endpoint="/v1/dmp/dataProviders/{dataProviderId}/dataconsumers",pid, filterType="data consumers")
-get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/segments",pid,filterType=FALSE)
+get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/segments",pid,filterType="0")
 
 
 cid<-get_Id_list( "/data/out/tables/categories_by_PID.csv")
