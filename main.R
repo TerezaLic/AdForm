@@ -231,7 +231,7 @@ get_report_datausage<-function(endpoint){
 
 ## get list of dataProviders Is  
 get_report(endpoint="/v1/dmp/dataproviders")
-pid<-get_Id_list("/data/out/tables/dataproviders.csv")
+pid<-get_Id_list("out/tables/dataproviders.csv")
 
 get_report(endpoint="/v1/dmp/agencies")
 
