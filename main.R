@@ -58,12 +58,12 @@ flatten<-function (l) {
                 
 # get list of Ids
 get_Id_list<-function(file){
-  read.csv(file,sep = ",")[ ,1]
+  read.csv(file,sep = ",", quote="\"")[ ,1]
 }                          
 
 # get list of Ids & Names (needed for UI filtering)
 get_SID_list<-function(file){
-  read.csv(file,sep = ",")[ ,c(1, 8)]
+  read.csv(file,sep = ",", quote="\"")[ ,c(1, 8)]
 }            
 
 # define API function w/o parameters 
@@ -231,7 +231,7 @@ get_report_datausage<-function(endpoint){
 
 ## get list of dataProviders Is  
 get_report(endpoint="/v1/dmp/dataproviders")
-pid<-get_Id_list( "/data/out/tables/dataproviders.csv")
+pid<-get_Id_list("/data/out/tables/dataproviders.csv")
 
 get_report(endpoint="/v1/dmp/agencies")
 
