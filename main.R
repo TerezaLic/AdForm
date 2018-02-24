@@ -230,8 +230,10 @@ get_report_datausage<-function(endpoint){
 # 1. data used as input/filter for other reports
 
 ## get list of dataProviders Is  
-get_report(endpoint="/v1/dmp/dataproviders")
-pid<-get_Id_list("/data/out/tables/dataproviders.csv")
+#get_report(endpoint="/v1/dmp/dataproviders")
+#pid<-get_Id_list("/data/out/tables/dataproviders.csv")
+pIdata<-GET(url,path="/v1/dmp/dataproviders",add_headers(Authorization = apiKey))%>%content("text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
+pid<-pIdata[["id"]]                                   
 
 get_report(endpoint="/v1/dmp/agencies")
 
