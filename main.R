@@ -26,7 +26,7 @@ user<-app$getParameters()$user
 password<-app$getParameters()$'#password'
 # default values for filters = (All), considered below as "select_all" / no filtering
 id<-app$getParameters()$id
-textstr<-app$getParameters()'$text'
+textstr<-app$getParameters()$text
 #3 options for filter: "category", "data consumers", "segment/audience"
 filterUI<-app$getParameters()$filter
 
