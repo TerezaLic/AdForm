@@ -260,7 +260,7 @@ suppressMessages(get_report_datausage(endpoint="/v2/dmp/reports/datausage"))
 ## get other supplementary tables
 suppressMessages(get_report(endpoint="/v2/dmp/reports/billing/overall"))
 suppressMessages(get_report_audience(endpoint="/v2/dmp/reports/audience",pid))
-suppressMessages(get_report_dcId(endpoint="/v1/dmp/dataconsumers/{dataConsumerId}/segments",dcid))
+#suppressMessages(get_report_dcId(endpoint="/v1/dmp/dataconsumers/{dataConsumerId}/segments",dcid))
 
 # run only if filterUI="segment/audience" or ""
 # get_report_SId(endpoint="/v2/dmp/segments/{segmentId}/audience",sid)
