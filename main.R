@@ -46,10 +46,6 @@ apiKey <- paste("Bearer ",returnData$access_token)
 # catch login errors
 if (req$status_code != 200) stop("unauthorized - verify username & password")
 
-# get list of data providers
-pIdata<-GET(url,path="/v1/dmp/dataproviders",add_headers(Authorization = apiKey))%>%content("text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
-pid<-pIdata[["id"]]
-
 
 #=======DEFINE FUNCTIONS========#
 
@@ -230,13 +226,12 @@ get_report_datausage<-function(endpoint){
 }
 
 #======================DATA LOAD================================================#
-#poslat všechny msg v konzoli do p*neznanáma
-sink("msg")
+
 # 1. data used as input/filter for other reports
 
 ## get list of dataProviders Is  
 get_report(endpoint="/v1/dmp/dataproviders")
-#pid<-get_Id_list("/data/out/tables/dataproviders.csv")                                  
+pid<-get_Id_list("/data/out/tables/dataproviders.csv")                                  
 
 get_report(endpoint="/v1/dmp/agencies")
 
@@ -272,5 +267,5 @@ get_report_SId(endpoint="/v2/dmp/segments/{segmentId}/audience/comparison",sid)
 get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/dynamics",sid)
 get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/totals",sid)
 
-sink(NULL)
+
 
