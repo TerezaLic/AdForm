@@ -230,18 +230,18 @@ get_report_datausage<-function(endpoint){
 # 1. data used as input/filter for other reports
 
 ## get list of dataProviders Is  
-get_report(endpoint="/v1/dmp/dataproviders")
+suppressMessages(get_report(endpoint="/v1/dmp/dataproviders"))
 pid<-get_Id_list("/data/out/tables/dataproviders.csv")                                  
 
-get_report(endpoint="/v1/dmp/agencies")
+suppressMessages(get_report(endpoint="/v1/dmp/agencies"))
 
 ## use dataProvidersId as selection
-get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/advertisers",pid,filterType="0")
+suppressMessages(get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/advertisers",pid,filterType="0"))
 
 
-get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/categories",pid, filterType="category")
-get_report_pId(endpoint="/v1/dmp/dataProviders/{dataProviderId}/dataconsumers",pid, filterType="data consumers")
-get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/segments",pid,filterType="0")
+suppressMessages(get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/categories",pid, filterType="category"))
+suppressMessages(get_report_pId(endpoint="/v1/dmp/dataProviders/{dataProviderId}/dataconsumers",pid, filterType="data consumers"))
+suppressMessages(get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/segments",pid,filterType="0"))
 
 
 cid<-get_Id_list( "/data/out/tables/categories_by_PID.csv")
@@ -251,15 +251,15 @@ dcid<-get_Id_list( "/data/out/tables/dataconsumers_by_PID.csv")
 # 2. Overall reports - to be filtred based on user selection
 
 ## get supplementary tables
-get_report_cId(endpoint="/v1/dmp/categories/{categoryId}/segments",cid)
+suppressMessages(get_report_cId(endpoint="/v1/dmp/categories/{categoryId}/segments",cid))
 
 ## get main table - DATAUSAGE
-get_report_datausage(endpoint="/v2/dmp/reports/datausage")  
+suppressMessages(get_report_datausage(endpoint="/v2/dmp/reports/datausage"))
 
 ## get other supplementary tables
-get_report(endpoint="/v2/dmp/reports/billing/overall")
-get_report_audience(endpoint="/v2/dmp/reports/audience",pid)
-get_report_dcId(endpoint="/v1/dmp/dataconsumers/{dataConsumerId}/segments",dcid)
+suppressMessages(get_report(endpoint="/v2/dmp/reports/billing/overall"))
+suppressMessages(get_report_audience(endpoint="/v2/dmp/reports/audience",pid))
+suppressMessages(get_report_dcId(endpoint="/v1/dmp/dataconsumers/{dataConsumerId}/segments",dcid))
 
 # run only if filterUI="segment/audience" or ""
 # get_report_SId(endpoint="/v2/dmp/segments/{segmentId}/audience",sid)
