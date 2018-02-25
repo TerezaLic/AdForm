@@ -107,20 +107,20 @@ get_report_audience<-function(pid,endpoint){
      # if/else to implement UI filters (teststr, Id, filterUI)
       if (filterUI=="category"){
           sid<-get_Id_list("/data/out/tables/segments_by_CID.csv")
-          df<-subset(df, `Audience ID` %in% sid)
+          df<-subset(df, "Audience ID" %in% sid)
           }
       else if (filterUI=="segment/audience" & !(id=="(All)") & textstr=="(All)"){
           sid<-id
-          df<-subset(df, `Audience ID` %in% sid)
+          df<-subset(df, "Audience ID" %in% sid)
           }
       else if (filterUI=="segment/audience" & !(id=="(All)") & !(textstr=="(All)")){
           sid<-id
-          df<-subset(df, `Audience ID` %in% sid)
+          df<-subset(df, "Audience ID" %in% sid)
           }
       else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")) {
           sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect("Audience Name", fixed(textstr,ignore_case=TRUE)))%>%select(1)
           sid<-as.numeric(as.character(sid$Audience.ID)) 
-          df<-subset(df, `Audience ID` %in% sid)
+          df<-subset(df, "Audience ID" %in% sid)
           }
       else {df}
       
