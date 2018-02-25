@@ -72,13 +72,11 @@ get_SID_list<-function(file){
 
 # define API function w/o parameters 
 get_report<-function(endpoint){
-  sink("msg")
   req<- httr::GET(url,path=endpoint,httr::add_headers(Accept = ContentType,Authorization = apiKey))
   datasource<-httr::content(req, as="parse")
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
-  sink(NULL)
   # write table metadata - set new primary key
   # app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Date'))
 }
@@ -100,13 +98,11 @@ get_report_pId<-function(pid,endpoint,filterType){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_PID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
-  sink(NULL)
 }
 
 
 # define API function for report Audience
 get_report_audience<-function(pid,endpoint){
-  sink("msg")
   datasource<-foreach(i=pid,.combine='rbind',.multicombine = TRUE)%dopar%{
     req<-httr::GET(url,path=endpoint,query=list(groupBy="date",dataProviderId=i,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
     datasource<-httr::content(req, as="parse")
@@ -159,12 +155,10 @@ get_report_dcId<-function(dcid,endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_DCID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
-  sink(NULL)
 }
 
 # define API function with segment ID parameter / JSON
 get_report_SId<-function(sid,endpoint){
-  sink("msg")
    # if/else to implement UI filters (teststr, Id, filterUI)
     if(filterUI=="category" & !(id=="(All)")){
             sid<-get_Id_list("/data/out/tables/segments_by_CID.csv")
@@ -197,12 +191,10 @@ get_report_SId<-function(sid,endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_SID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
-  sink(NULL)
 }
 
 # define function for main report: Datausage                          
 get_report_datausage<-function(endpoint){
-  sink("msg")
   req<- httr::GET(url,path=endpoint,query=list(groupBy="none",from=dateFrom,to=dateTo) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
   datasource<-httr::content(req, as="text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
   datasource_l<-lapply(datasource, flatten)
@@ -233,7 +225,6 @@ get_report_datausage<-function(endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
-  sink(NULL)
   # write table metadata - set new primary key
   # app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Date'))
 }
