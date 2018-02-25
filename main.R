@@ -117,7 +117,7 @@ get_report_audience<-function(pid,endpoint){
           df<-subset(df, `Audience ID` %in% sid)
           }
       else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")) {
-          sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(`Audience Name`, fixed(textstr,ignore_case=TRUE)))%>%select(1)
+          sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(`Audience_Name`, fixed(textstr,ignore_case=TRUE)))%>%select(1)
           sid<-as.numeric(as.character(sid$Audience.ID)) 
           df<-subset(df, `Audience ID` %in% sid)
           }
@@ -169,7 +169,7 @@ get_report_SId<-function(sid,endpoint){
             sid<-id
     } 
     else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")){
-            sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(`Audience Name`, fixed(textstr,ignore_case=TRUE)))%>%select(1)
+            sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(`Audience_Name`, fixed(textstr,ignore_case=TRUE)))%>%select(1)
             sid<-as.numeric(as.character(sid$Audience.ID)) 
           }
     else {
@@ -212,7 +212,7 @@ get_report_datausage<-function(endpoint){
       datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
       }
       else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")) {
-      sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(`Audience Name`, fixed(textstr,ignore_case=TRUE)))%>%select(1)
+      sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(`Audience_Name`, fixed(textstr,ignore_case=TRUE)))%>%select(1)
       sid<-as.numeric(as.character(sid$Audience.ID)) 
       datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
       }
