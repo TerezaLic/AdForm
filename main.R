@@ -109,19 +109,19 @@ get_report_audience<-function(pid,endpoint){
      # if/else to implement UI filters (teststr, Id, filterUI)
       if (filterUI=="category"){
           sid<-get_Id_list("/data/out/tables/segments_by_CID.csv")
-          df<-subset(df, "Audience ID" %in% sid)
+          df<-subset(df, Audience_ID %in% sid)
           }
       else if (filterUI=="segment/audience" & !(id=="(All)") & textstr=="(All)"){
           sid<-id
-          df<-subset(df, "Audience ID" %in% sid)
+          df<-subset(df, Audience_ID %in% sid)
           }
       else if (filterUI=="segment/audience" & !(id=="(All)") & !(textstr=="(All)")){
           sid<-id
-          df<-subset(df, "Audience ID" %in% sid)
+          df<-subset(df, Audience_ID %in% sid)
           }
       else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")) {
           sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(Audience_Name, fixed(textstr,ignore_case=TRUE)))%>%select(1)
-          sid<-as.numeric(as.character(sid$Audience.ID)) 
+          sid<-as.numeric(as.character(sid$Audience_ID)) 
           df <- df[df$Audience_ID %in% sid]
           }
       else {df}
@@ -173,7 +173,7 @@ get_report_SId<-function(sid,endpoint){
     } 
     else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")){
             sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(Audience_Name, fixed(textstr,ignore_case=TRUE)))%>%select(1)
-            sid<-as.numeric(as.character(sid$Audience.ID)) 
+            sid<-as.numeric(as.character(sid$Audience_ID)) 
           }
     else {
     # if filterUI is not "category"or "segment/audience" then assign NULL to prevent performance issue (cycling 500 possibilites one by one)
@@ -216,7 +216,7 @@ get_report_datausage<-function(endpoint){
       }
       else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")) {
       sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(Audience_Name, fixed(textstr,ignore_case=TRUE)))%>%select(1)
-      sid<-as.numeric(as.character(sid$Audience.ID)) 
+      sid<-as.numeric(as.character(sid$Audience_ID)) 
       datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
       }
       else {datasource}
