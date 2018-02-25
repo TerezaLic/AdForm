@@ -183,7 +183,6 @@ get_report_SId<-function(sid,endpoint){
   
   datasource<-foreach(i=sid,.combine='rbind',.multicombine = TRUE)%dopar%{
     req<-httr::GET(url,path=endpoint,query=list(segmentId=i) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
-    if (req$status_code != 200) stop("No output for report " basename(endpoint))
     datasource<-httr::content(req, as="text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
   }  
   fname=basename(endpoint)
