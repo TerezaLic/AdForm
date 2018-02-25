@@ -264,7 +264,7 @@ suppressMessages(get_report_dcId(endpoint="/v1/dmp/dataconsumers/{dataConsumerId
 
 # run only if filterUI="segment/audience" or ""
 # get_report_SId(endpoint="/v2/dmp/segments/{segmentId}/audience",sid)
-get_report_SId(endpoint="/v2/dmp/segments/{segmentId}/audience/comparison",sid)
+get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/comparison",sid)
 get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/dynamics",sid)
 get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/totals",sid)
 
