@@ -230,7 +230,8 @@ get_report_datausage<-function(endpoint){
 }
 
 #======================DATA LOAD================================================#
-
+#poslat všechny msg v konzoli do p*neznanáma
+sink("msg")
 # 1. data used as input/filter for other reports
 
 ## get list of dataProviders Is  
@@ -271,5 +272,5 @@ get_report_SId(endpoint="/v2/dmp/segments/{segmentId}/audience/comparison",sid)
 get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/dynamics",sid)
 get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/totals",sid)
 
-
+sink(NULL)
 
