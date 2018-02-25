@@ -122,7 +122,7 @@ get_report_audience<-function(pid,endpoint){
       else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")) {
           sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(Audience_Name, fixed(textstr,ignore_case=TRUE)))%>%select(1)
           sid<-as.numeric(as.character(sid)) 
-          df <- df[df$Audience_ID %in% sid]
+          df <- df[df$Audience_ID %in% sid,]
           }
       else {df}
       
