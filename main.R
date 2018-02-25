@@ -11,6 +11,7 @@ library('keboola.r.docker.application', warn.conflicts=FALSE, quietly=TRUE)
 library(purrr, warn.conflicts=FALSE, quietly=TRUE)
 library(foreach, warn.conflicts=FALSE, quietly=TRUE)
 library(stringr, warn.conflicts = FALSE, quietly = TRUE)
+library(dplyr, warn.conflicts = FALSE, quietly = TRUE)
 
 
 #=======CONFIGURATION========#
