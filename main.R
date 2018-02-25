@@ -25,10 +25,10 @@ dateTo<-app$getParameters()$dateTo
 user<-app$getParameters()$user
 password<-app$getParameters()$'#password'
 # default values for filters = (All), considered below as "select_all" / no filtering
-id<-app$getParameters()$id
-textstr<-app$getParameters()$text
+id<-app$getParameters()$filtry.id
+textstr<-app$getParameters()$filtry.text
 #3 options for filter: "category", "data consumers", "segment/audience"
-filterUI<-app$getParameters()$filter
+filterUI<-app$getParameters()$filtry.filter
 
 ContentType<-"text/csv"
 #outDestination <- app$getParameters()$bucke
