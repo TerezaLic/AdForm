@@ -98,7 +98,7 @@ get_report_pId<-function(pid,endpoint,filterType){
   csvFileName<-paste("/data/out/tables/",fname,"_by_PID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
    # write table metadata - set new primary key
-  if(fname=="segments_by_PID"){
+  if(fname=="segments"){
   app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Audience_ID'))}
   else {
     app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Id'))
@@ -204,7 +204,7 @@ get_report_SId<-function(sid,endpoint){
   csvFileName<-paste("/data/out/tables/",fname,"_by_SID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
   # write table metadata - set new primary key
-  if (fname=="comparison_by_SID") {
+  if (fname=="comparison") {
   app$writeTableManifest(csvFileName,destination='')
     } else {app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('segmentId', 'date'))}
 }
