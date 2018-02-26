@@ -202,7 +202,7 @@ get_report_SId<-function(sid,endpoint){
   }  
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_SID",".csv",sep = "")
-  write.csv(datasource,file=csvFileName,row.names = FALSE)
+  write.csv(datasource,file=csvFileName,row.names = FALSE,sep=",")
   # write table metadata - set new primary key
   if (fname=="comparison") {
   app$writeTableManifest(csvFileName,destination='')
