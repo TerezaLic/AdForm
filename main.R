@@ -191,10 +191,12 @@ get_report_SId<-function(sid,endpoint){
     else {
     # if filterUI is not "category"or "segment/audience" then assign NULL to prevent performance issue (cycling 500 possibilites one by one)
           sid<-'no selection'
-          #Writing a message to the console
-          write(paste0("No specific segment / audience Id selected. Reports audience/comparison, audience/dynamics and audience/totals will be empty."), stdout())
-          }
-    
+           }
+  
+if  (sid=="no selection")   {
+  #Writing a message to the console
+  write(paste0("No specific segment / audience Id selected. Report",endpoint," is empty."), stdout())
+} else {    
   
   datasource<-foreach(i=sid,.combine='rbind',.multicombine = TRUE)%dopar%{
     req<-httr::GET(url,path=endpoint,query=list(segmentId=i) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
@@ -207,8 +209,8 @@ get_report_SId<-function(sid,endpoint){
   if (fname=="comparison") {
   app$writeTableManifest(csvFileName,destination='')
     } else {app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('segmentId', 'date'))}
+  }
 }
-
 # define function for main report: Datausage                          
 get_report_datausage<-function(endpoint){
   req<- httr::GET(url,path=endpoint,query=list(groupBy="none",from=dateFrom,to=dateTo) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
