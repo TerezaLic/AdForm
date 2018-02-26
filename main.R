@@ -133,7 +133,10 @@ get_report_audience<-function(pid,endpoint){
           }
       else {df}
       
+    if  (nrow(df)>0){
     df$byProviderId<-i 
+  } else {
+    df}
   }
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_date.csv",sep = "")
