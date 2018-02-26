@@ -94,7 +94,7 @@ get_report_pId<-function(pid,endpoint,filterType){
   csvFileName<-paste("/data/out/tables/",fname,"_by_PID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
    # write table metadata - set new primary key
-  if(fname="segments_by_PID"){
+  if(fname=="segments_by_PID"){
   app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Audience_ID'))}
   else {
     app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Id'))
@@ -134,6 +134,8 @@ get_report_audience<-function(pid,endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_date.csv",sep = "")
   write.csv(df,file=csvFileName,row.names = FALSE)
+  # write table metadata - set new primary key
+  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Date','Audience_ID'))
 }
 
 # define API function with category ID parameter
@@ -145,6 +147,8 @@ get_report_cId<-function(cid,endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_CID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
+  # write table metadata - set new primary key
+  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Audience_ID'))
 }
 
 
@@ -157,6 +161,8 @@ get_report_dcId<-function(dcid,endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_DCID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
+  # write table metadata - set new primary key
+  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Id'))
 }
 
 # define API function with segment ID parameter / JSON
@@ -193,6 +199,10 @@ get_report_SId<-function(sid,endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_SID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
+  # write table metadata - set new primary key
+  if (fname=="comparison_by_SID") {
+  app$writeTableManifest(csvFileName,destination='')
+    } else {app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('segmentId', 'date'))}
 }
 
 # define function for main report: Datausage                          
@@ -227,8 +237,6 @@ get_report_datausage<-function(endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
-  # write table metadata - set new primary key
-  # app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Date'))
 }
 
 #======================DATA LOAD================================================#
