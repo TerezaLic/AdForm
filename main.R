@@ -1,6 +1,3 @@
-#result <- input_data
-#write.csv(result, file = "out/tables/output.csv", row.names = FALSE)
-
 
 #=======Install the libraries=========#
 library(lubridate, warn.conflicts=FALSE, quietly=TRUE)
@@ -75,7 +72,7 @@ get_report<-function(endpoint){
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
   # write table metadata - set new primary key
-  # app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Date'))
+  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Id'))
 }
 
 # define API function with ProviderId parameter
@@ -96,6 +93,12 @@ get_report_pId<-function(pid,endpoint,filterType){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_PID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
+   # write table metadata - set new primary key
+  if(fname="segments_by_PID"){
+  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Audience_ID'))}
+  else {
+    app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Id'))
+  }
 }
 
 
