@@ -71,8 +71,12 @@ get_report<-function(endpoint){
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
+  if (fname=="overall") {
   # write table metadata - set new primary key
-  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Id'))
+  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('DataProviderId'))}
+  else {
+    app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Id'))
+    }
 }
 
 # define API function with ProviderId parameter
