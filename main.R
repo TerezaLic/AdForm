@@ -225,6 +225,11 @@ get_report_datausage<-function(endpoint){
   # Define them in SegmentCols and use to filter UI segment Id
   SegmentCols<-(datasource[,grepl("^segmentIds",colnames(datasource))])
       if (filterUI=="category"){
+          if (count.fields("/data/out/tables/segments_by_CID.csv")<=1){
+          datasource<-datasource[FALSE,]
+          }else{
+          sid<-as.numeric(get_Id_list("/data/out/tables/segments_by_CID.csv"))  
+          datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]}}
       sid<-as.numeric(get_Id_list("/data/out/tables/segments_by_CID.csv"))
       datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
       }
