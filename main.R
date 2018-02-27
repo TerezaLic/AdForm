@@ -114,7 +114,10 @@ get_report_audience<-function(pid,endpoint){
      names(datasource)<- gsub(" ", "_", names(datasource))
     df<-as.data.frame(datasource)
      # if/else to implement UI filters (teststr, Id, filterUI)
-      if (filterUI=="category"){
+      if (filterUI=="category" & (count.fields("/data/out/tables/segments_by_CID.csv")<=1)){
+          datasource<-datasource[FALSE,]
+          }
+      else if (filterUI=="category" & (count.fields("/data/out/tables/segments_by_CID.csv")>1)){  
           sid<-get_Id_list("/data/out/tables/segments_by_CID.csv")
           df<-subset(df, Audience_ID %in% sid)
           }
