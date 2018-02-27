@@ -196,7 +196,7 @@ get_report_SId<-function(sid,endpoint){
           sid<-'no selection'
            }
   
-if  (is.null(sid=="no selection")|length(sid)==0))   {
+if  (is.null(sid=="no selection")|length(sid)==0)  {
   #Writing a message to the console
   write(paste0("No specific segment / audience Id selected. Report",endpoint," is empty."), stdout())
 } else {    
