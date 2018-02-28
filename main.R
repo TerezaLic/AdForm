@@ -252,7 +252,8 @@ if (filterUI=="category" & length(cid)==0) {
 } else if (filterUI=="category" & (count.fields("/data/out/tables/segments_by_CID.csv")>1)){
   sid<-get_Id_list("/data/out/tables/segments_by_CID.csv")
 } else if (filterUI=="segment/audience" & !(id=="(All)")){
-  sid<-id
+  sid<--get_SID_list("/data//out/tables/segments_by_PID.csv")%>%filter(str_detect(Audience_ID, fixed(id,ignore_case=TRUE)))%>%select(1)
+  sid<-as.numeric(as.character(sid$Audience_ID))
 } else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")) {
   sid<-get_SID_list("/data//out/tables/segments_by_PID.csv")%>%filter(str_detect(Audience_Name, fixed(textstr,ignore_case=TRUE)))%>%select(1)
   sid<-as.numeric(as.character(sid$Audience_ID)) 
