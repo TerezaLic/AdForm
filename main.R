@@ -53,7 +53,7 @@ flatten<-function (l) {
   do.call('rbind', lapply(l, function(x) `length<-`(x, max(lengths(l)))))
 }
 # ?? různá délka outputu problém pro KBC, zatím poznámka do user dokumentace
-                
+
 # get list of Ids
 get_Id_list<-function(file){
   read.csv(file,sep = ",", quote="\"")[ ,1]
@@ -72,11 +72,11 @@ get_report<-function(endpoint){
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
   if (fname=="overall") {
-  # write table metadata - set new primary key
-  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('DataProviderId'))}
+    # write table metadata - set new primary key
+    app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('DataProviderId'))}
   else {
     app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Id'))
-    }
+  }
 }
 
 # define API function with ProviderId parameter
@@ -91,15 +91,15 @@ get_report_pId<-function(pid,endpoint,filterType){
     } else if(filterType==filterUI & !(id=="(All)") & !(textstr=="(All)")){
       datasource<-httr::content(req, as="parse")%>%filter(str_detect(Name, fixed(textstr,ignore_case=TRUE)))%>%filter(Id == id)
     } else
-    datasource<-httr::content(req, as="parse")
+      datasource<-httr::content(req, as="parse")
   }
   names(datasource)<- gsub(" ", "_", names(datasource))
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_PID",".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
-   # write table metadata - set new primary key
+  # write table metadata - set new primary key
   if(fname=="segments"){
-  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Audience_ID'))}
+    app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Audience_ID'))}
   else {
     app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('Id'))
   }
@@ -111,35 +111,28 @@ get_report_audience<-function(pid,endpoint){
   datasource<-foreach(i=pid,.combine='rbind',.multicombine = TRUE)%dopar%{
     req<-httr::GET(url,path=endpoint,query=list(groupBy="date",dataProviderId=i,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
     datasource<-httr::content(req, as="parse")
-     names(datasource)<- gsub(" ", "_", names(datasource))
+    names(datasource)<- gsub(" ", "_", names(datasource))
     df<-as.data.frame(datasource)
-     # if/else to implement UI filters (teststr, Id, filterUI)
-      if (filterUI=="category" & (count.fields("/data/out/tables/segments_by_CID.csv")<=1)){
-          datasource<-datasource[FALSE,]
-          }
-      else if (filterUI=="category" & (count.fields("/data/out/tables/segments_by_CID.csv")>1)){  
-          sid<-get_Id_list("/data/out/tables/segments_by_CID.csv")
-          df<-subset(df, Audience_ID %in% sid)
-          }
-      else if (filterUI=="segment/audience" & !(id=="(All)") & textstr=="(All)"){
-          sid<-id
-          df<-subset(df, Audience_ID %in% sid)
-          }
-      else if (filterUI=="segment/audience" & !(id=="(All)") & !(textstr=="(All)")){
-          sid<-id
-          df<-subset(df, Audience_ID %in% sid)
-          }
-      else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")) {
-          sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(Audience_Name, fixed(textstr,ignore_case=TRUE)))%>%select(1)
-          sid<-as.numeric(as.character(sid)) 
-          df <- df[df$Audience_ID %in% sid,]
-          }
-      else {df}
-      
-    if  (nrow(df)>0){
-    df$byProviderId<-i 
-  } else {
-    df$byProviderId <- character(0)}
+    # if/else to implement UI filters (teststr, Id, filterUI)
+    
+    if (filterUI=="category" & length(cid)==0){
+      #Writing a message to the console
+      write(paste0("No output for selected category. Report",endpoint," is empty."), stdout())
+      df<-df[FALSE,]
+    } else if (filterUI=="category" & length(cid>=1)){  
+      df<-subset(df, Audience_ID %in% sid)
+    } else if (filterUI=="segment/audience" & length(sid)==0){
+      #Writing a message to the console
+      write(paste0("No output for selected segment / audience. Report",endpoint," is empty."), stdout())
+      df<-df[FALSE,]  
+    } else if (filterUI=="segment/audience" & length(sid)>=1){
+      df<-subset(df, Audience_ID %in% sid)
+    } else {df}
+    
+    if (nrow(df)>0){
+      df$byProviderId<-i 
+    } else {
+      df$byProviderId <- character(0) }
   }
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,"_by_date.csv",sep = "")
@@ -177,36 +170,6 @@ get_report_dcId<-function(dcid,endpoint){
 
 # define API function with segment ID parameter / JSON
 get_report_SId<-function(sid,endpoint){
-   # if/else to implement UI filters (teststr, Id, filterUI)
-   if (filterUI=="category" & (count.fields("/data/out/tables/segments_by_CID.csv")<=1)){
-          sid<-'no selection'
-          }
-    else if (filterUI=="category" & (count.fields("/data/out/tables/segments_by_CID.csv")>1)){    
-            sid<-get_Id_list("/data/out/tables/segments_by_CID.csv")
-    } 
-    else if (filterUI=="category" & !(textstr=="(All)")){
-            sid<-get_Id_list("/data/out/tables/segments_by_CID.csv")
-    } 
-    else if (filterUI=="segment/audience" & !(id=="(All)") & textstr=="(All)"){
-            sid<-id
-    } 
-    else if (filterUI=="segment/audience" & !(id=="(All)") & !(textstr=="(All)")){
-            sid<-id
-    } 
-    else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")){
-            sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(Audience_Name, fixed(textstr,ignore_case=TRUE)))%>%select(1)
-            sid<-as.numeric(as.character(sid$Audience_ID)) 
-          }
-    else {
-    # if filterUI is not "category"or "segment/audience" then assign NULL to prevent performance issue (cycling 500 possibilites one by one)
-          sid<-'no selection'
-           }
-  
-if  (is.null(sid=="no selection")|length(sid)==0)  {
-  #Writing a message to the console
-  write(paste0("No specific segment / audience Id selected. Report",endpoint," is empty."), stdout())
-} else {    
-  
   datasource<-foreach(i=sid,.combine='rbind',.multicombine = TRUE)%dopar%{
     req<-httr::GET(url,path=endpoint,query=list(segmentId=i) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
     datasource<-httr::content(req, as="text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
@@ -216,10 +179,10 @@ if  (is.null(sid=="no selection")|length(sid)==0)  {
   write.csv(datasource,file=csvFileName,row.names = FALSE)
   # write table metadata - set new primary key
   if (fname=="comparison") {
-  app$writeTableManifest(csvFileName,destination='')
-    } else {app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('segmentId', 'date'))}
-  }
+    app$writeTableManifest(csvFileName,destination='')
+  } else {app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('segmentId', 'date'))}
 }
+
 # define function for main report: Datausage                          
 get_report_datausage<-function(endpoint){
   req<- httr::GET(url,path=endpoint,query=list(groupBy="none",from=dateFrom,to=dateTo) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
@@ -230,27 +193,19 @@ get_report_datausage<-function(endpoint){
   # Unknown number of Segment Ids columns added by "flatten" function - nested Json cleaning.
   # Define them in SegmentCols and use to filter UI segment Id
   SegmentCols<-(datasource[,grepl("^segmentIds",colnames(datasource))])
-      if (filterUI=="category" & (count.fields("/data/out/tables/segments_by_CID.csv")<=1)){
-          datasource<-datasource[FALSE,]
-      }
-      else if (filterUI=="category" & (count.fields("/data/out/tables/segments_by_CID.csv")>1)){
-      sid<-as.numeric(get_Id_list("/data/out/tables/segments_by_CID.csv"))
-      datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
-      }
-      else if (filterUI=="segment/audience" & !(id=="(All)") & textstr=="(All)"){
-      sid<-id
-      datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
-      }
-      else if (filterUI=="segment/audience" & !(id=="(All)") & !(textstr=="(All)")){
-      sid<-id
-      datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
-      }
-      else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")) {
-      sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")%>%filter(str_detect(Audience_Name, fixed(textstr,ignore_case=TRUE)))%>%select(1)
-      sid<-as.numeric(as.character(sid$Audience_ID)) 
-      datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
-      }
-      else {datasource}
+  if (filterUI=="category" & length(sid)==0){
+    datasource<-datasource[FALSE,]
+  }
+  else if (filterUI=="category" & length(sid)>=1){
+    datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
+  }
+  else if (filterUI=="segment/audience"& length(sid)==0){
+    datasource<-datasource[FALSE,]
+  }
+  else if (filterUI=="segment/audience" & length(sid)>=1){
+    datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
+  }
+  else {datasource}
   
   fname=basename(endpoint)
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
@@ -262,6 +217,7 @@ get_report_datausage<-function(endpoint){
 # 1. data used as input/filter for other reports
 
 ## get list of dataProviders Is  
+sink("msg")
 suppressMessages(get_report(endpoint="/v1/dmp/dataproviders"))
 pid<-get_Id_list("/data/out/tables/dataproviders.csv")                                  
 
@@ -276,6 +232,7 @@ suppressMessages(get_report_pId(endpoint="/v1/dmp/dataProviders/{dataProviderId}
 suppressMessages(get_report_pId(endpoint="/v1/dmp/dataproviders/{dataProviderId}/segments",pid,filterType="0"))
 
 
+# Get list of  Category_Id a Data Consumer Id according to User filters and use them in other functions- cycling.
 cid<-get_Id_list( "/data/out/tables/categories_by_PID.csv")
 dcid<-get_Id_list( "/data/out/tables/dataconsumers_by_PID.csv")
 
@@ -283,7 +240,25 @@ dcid<-get_Id_list( "/data/out/tables/dataconsumers_by_PID.csv")
 # 2. Overall reports - to be filtred based on user selection
 
 ## get supplementary tables
-suppressMessages(get_report_cId(endpoint="/v1/dmp/categories/{categoryId}/segments",cid))
+if (length(cid)==0){
+  #Writing a message to the console
+  write(paste0("No output for selected category. Report segments by CID is empty."), stdout())
+} else {
+  suppressMessages(get_report_cId(endpoint="/v1/dmp/categories/{categoryId}/segments",cid)) 
+}
+
+if (filterUI=="category" & length(cid)==0) {
+  sid<-NULL
+} else if (filterUI=="category" & (count.fields("/data/out/tables/segments_by_CID.csv")>1)){
+  sid<-get_Id_list("/data/out/tables/segments_by_CID.csv")
+} else if (filterUI=="segment/audience" & !(id=="(All)")){
+  sid<-id
+} else if (filterUI=="segment/audience" & id=="(All)" & !(textstr=="(All)")) {
+  sid<-get_SID_list("/data//out/tables/segments_by_PID.csv")%>%filter(str_detect(Audience_Name, fixed(textstr,ignore_case=TRUE)))%>%select(1)
+  sid<-as.numeric(as.character(sid$Audience_ID)) 
+}else {
+  sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")
+}
 
 ## get main table - DATAUSAGE
 suppressMessages(get_report_datausage(endpoint="/v2/dmp/reports/datausage"))
@@ -293,11 +268,15 @@ suppressMessages(get_report(endpoint="/v2/dmp/reports/billing/overall"))
 suppressMessages(get_report_audience(endpoint="/v2/dmp/reports/audience",pid))
 #suppressMessages(get_report_dcId(endpoint="/v1/dmp/dataconsumers/{dataConsumerId}/segments",dcid))
 
-# run only if filterUI="segment/audience" or ""
-# get_report_SId(endpoint="/v2/dmp/segments/{segmentId}/audience",sid)
-get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/comparison",sid)
-get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/dynamics",sid)
-get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/totals",sid)
-
-
+# run only if sid (list of segment Ids) is not empty
+sink(NULL)
+if (length(sid)>=1){
+  # get_report_SId(endpoint="/v2/dmp/segments/{segmentId}/audience",sid)
+  get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/comparison",sid)
+  get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/dynamics",sid)
+  get_report_SId(endpoint="/v1/dmp/segments/{segmentId}/audience/totals",sid)
+} else {
+  #Writing a message to the console
+  write(paste0("No specific segment / audience Id selected. Reports {segmentId}/comparison, dynamics, totals are not downloaded."), stdout())
+}
 
