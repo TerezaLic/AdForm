@@ -258,7 +258,7 @@ if (filterUI=="category" & length(cid)==0) {
   sid<-get_SID_list("/data//out/tables/segments_by_PID.csv")%>%filter(str_detect(Audience_Name, fixed(textstr,ignore_case=TRUE)))%>%select(1)
   sid<-as.numeric(as.character(sid$Audience_ID)) 
 }else {
-  sid<-get_SID_list("/data/out/tables/segments_by_PID.csv")
+  sid<-get_Id_list("/data/out/tables/segments_by_PID.csv")
 }
 
 ## get main table - DATAUSAGE
