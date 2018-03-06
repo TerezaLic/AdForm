@@ -18,8 +18,7 @@ app <- keboola.r.docker.application::DockerApplication$new('/data/')
 app$readConfig()
 
 # access the supplied value of 'myParameter'
-dateFrom<-app$getParameters()$dateFrom
-dateTo<-app$getParameters()$dateTo
+days_past<-app$getParameters()$from
 user<-app$getParameters()$user
 password<-app$getParameters()$'#password'
 # default values for filters = (All), considered below as "select_all" / no filtering
@@ -30,6 +29,10 @@ filterUI<-app$getParameters()$filtry$filter
 
 ContentType<-"text/csv"
 #outDestination <- app$getParameters()$bucke
+
+## Create the date from where we take data
+days_past<-ifelse(is.null(days_past),1,as.numeric(days_past))
+from<-Sys.Date()-days_past
 
 #=======Actual API call========#
 
@@ -109,7 +112,7 @@ get_report_pId<-function(pid,endpoint,filterType){
 # define API function for report Audience
 get_report_audience<-function(pid,endpoint){
   datasource<-foreach(i=pid,.combine='rbind',.multicombine = TRUE)%dopar%{
-    req<-httr::GET(url,path=endpoint,query=list(groupBy="date",dataProviderId=i,from=dateFrom,to=dateTo) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
+    req<-httr::GET(url,path=endpoint,query=list(groupBy="date",dataProviderId=i,from=from) ,httr::add_headers(Accept = ContentType,Authorization = apiKey))
     datasource<-httr::content(req, as="parse")
     names(datasource)<- gsub(" ", "_", names(datasource))
     df<-as.data.frame(datasource)
@@ -185,7 +188,7 @@ get_report_SId<-function(sid,endpoint){
 
 # define function for main report: Datausage                          
 get_report_datausage<-function(endpoint){
-  req<- httr::GET(url,path=endpoint,query=list(groupBy="none",from=dateFrom,to=dateTo) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
+  req<- httr::GET(url,path=endpoint,query=list(groupBy="none",from=from) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
   datasource<-httr::content(req, as="text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
   datasource_l<-lapply(datasource, flatten)
   datasource<-do.call(data.frame,datasource_l)
