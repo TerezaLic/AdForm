@@ -214,7 +214,7 @@ get_report_datausage<-function(endpoint){
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
   write.csv(datasource,file=csvFileName,row.names = FALSE)
    # write table metadata - set new primary key
-  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('date','lineItemId','orderId','segmentsGroupId','segmentIds_1'),incremental=TRUE)
+  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('date','lineItemId','orderId','segmentsGroupId','segmentIds_1','impressions'),incremental=TRUE)
 }
 
 #======================DATA LOAD================================================#
