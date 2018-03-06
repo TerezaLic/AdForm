@@ -53,7 +53,7 @@ if (req$status_code != 200) stop("unauthorized - verify username & password")
 # funciton to clean nested Json / split list values into more columns
 flatten<-function (l) {
   if (!is.list(l)) return(l)
-  do.call('rbind', lapply(l, function(x) `length<-`(x, max(lengths(l)))))
+  do.call('rbind', lapply(l, function(x) `length<-`(x, 2)))
 }
 # ?? různá délka outputu problém pro KBC, zatím poznámka do user dokumentace
 
