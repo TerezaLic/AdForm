@@ -286,3 +286,5 @@ if (length(sid)>=1){
   write(paste0("No specific segment / audience Id selected. Reports {segmentId}/comparison, dynamics, totals are not downloaded."), stdout())
 }
 
+# get datausage by segments
+                                 
