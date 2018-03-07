@@ -217,36 +217,6 @@ get_report_datausage<-function(endpoint){
   app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('date','lineItemId','orderId','segmentsGroupId','segmentIds_1','impressions'),incremental=TRUE)
 }
 
-                                 # define function for main report: Datausage                          
-get_report_datausage2<-function(endpoint){
-  req<- httr::GET(url,path=endpoint,query=list(groupBy="segment",from=from) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
-  datasource<-httr::content(req, as="text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
-  datasource_l<-lapply(datasource, flatten)
-  datasource<-do.call(data.frame,datasource_l)
-  rm(datasource_l)
-  # Unknown number of Segment Ids columns added by "flatten" function - nested Json cleaning.
-  # Define them in SegmentCols and use to filter UI segment Id
-  SegmentCols<-(datasource[,grepl("^segmentIds",colnames(datasource))])
-  if (filterUI=="category" & length(sid)==0){
-    datasource<-datasource[FALSE,]
-  }
-  else if (filterUI=="category" & length(sid)>=1){
-    datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
-  }
-  else if (filterUI=="segment/audience"& length(sid)==0){
-    datasource<-datasource[FALSE,]
-  }
-  else if (filterUI=="segment/audience" & length(sid)>=1){
-    datasource<-datasource[apply(SegmentCols [,],1,function(x) any(x %in% sid)),]
-  }
-  else {datasource}
-  
-  fname=basename(endpoint)
-  csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
-  write.csv(datasource,file=csvFileName,row.names = FALSE)
-   # write table metadata - set new primary key
-  app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('date','lineItemId','orderId','segmentsGroupId','segmentIds_1','impressions'),incremental=TRUE)
-}
 
 get_segmentGr_names<-function(endpoint){
   req<- httr::GET(url,path=endpoint,query=list(groupBy="segment",from=from) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
