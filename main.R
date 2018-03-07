@@ -224,7 +224,7 @@ get_segmentGr_names<-function(endpoint){
   df<-datasource[ ,c(1, 2)]
   fname="SegmentGroups"
   csvFileName<-paste("/data/out/tables/",fname,".csv",sep = "")
-  write.csv(datasource,file=csvFileName,row.names = FALSE)
+  write.csv(df,file=csvFileName,row.names = FALSE)
   # write table metadata - set new primary key
   app$writeTableManifest(csvFileName,destination='' ,primaryKey =c('segmentsGroupId'),incremental=TRUE)
 }                                 
