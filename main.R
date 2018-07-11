@@ -218,6 +218,7 @@ get_report_datausage<-function(endpoint){
 }
 
 
+# get segment groups not used 20018-07-11.  Output changed by Adform.
 get_segmentGr_names<-function(endpoint){
   req<- httr::GET(url,path=endpoint,query=list(groupBy="segment",from=from) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
   datasource<-httr::content(req, as="text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
@@ -298,4 +299,4 @@ if (length(sid)>=1){
 }
 
 # get segment groups
-suppressMessages(get_segmentGr_names(endpoint="/v2/dmp/reports/datausage"))                                 
+# suppressMessages(get_segmentGr_names(endpoint="/v2/dmp/reports/datausage"))                                 
