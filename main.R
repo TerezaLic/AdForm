@@ -1,5 +1,8 @@
 
 #=======Install the libraries=========#
+# 23.8.2018
+library(plyr)
+
 library(lubridate, warn.conflicts=FALSE, quietly=TRUE)
 library(httr, warn.conflicts=FALSE, quietly=TRUE)
 library(jsonlite, warn.conflicts=FALSE, quietly=TRUE)
@@ -193,6 +196,17 @@ get_report_datausage<-function(endpoint){
   datasource_l<-lapply(datasource, flatten)
   datasource<-do.call(data.frame,datasource_l)
   rm(datasource_l)
+  
+   # 23.8.2018 addition to ensure that all duplicated rows are included and numeric values sumed
+  datasource$key<-paste0(datasource$date,datasource$lineItemId,datasource$orderId,datasource$segmentsGroupId,datasource$segmentIds.1,datasource$impressions)
+  datasource$impressions<-as.numeric(datasource$impressions)
+  datasource[sapply(datasource, is.integer)]<-lapply(datasource[sapply(datasource, is.integer)], as.factor)
+  subset<-datasource%>%select(1:22,24,40:46)
+  datasource2<-ddply(datasource,.(key),numcolwise(sum))
+  datasource2<-datasource2%>%left_join(subset, by=c("key"="key"))
+  datasource2$key<-NULL
+  datasource<-datasource2
+  
   # Unknown number of Segment Ids columns added by "flatten" function - nested Json cleaning.
   # Define them in SegmentCols and use to filter UI segment Id
   SegmentCols<-(datasource[,grepl("^segmentIds",colnames(datasource))])
