@@ -198,7 +198,7 @@ get_report_datausage<-function(endpoint){
   rm(datasource_l)
   
    # 23.8.2018 addition to ensure that all duplicated rows are included and numeric values sumed
-  datasource$key<-paste0(datasource$date,datasource$lineItemId,datasource$orderId,datasource$segmentsGroupId,datasource$segmentIds.1)
+  datasource$key<-paste0(datasource$date,datasource$lineItemId,datasource$orderId,datasource$segmentsGroupId,datasource$segmentIds.1,datasource$segmentIds.2,datasource$segmentIds.3)
   datasource$impressions<-as.numeric(datasource$impressions)
   datasource[sapply(datasource, is.integer)]<-lapply(datasource[sapply(datasource, is.integer)], as.factor)
   subset<-datasource%>%select(1:22,24,40:46)
