@@ -193,6 +193,8 @@ get_report_SId<-function(sid,endpoint){
 get_report_datausage<-function(endpoint){
   req<- httr::GET(url,path=endpoint,query=list(groupBy="none",from=from) ,httr::add_headers(Accept = 'application/json',Authorization = apiKey))
   datasource<-httr::content(req, as="text", encoding = "UTF-8")%>%fromJSON(flatten=TRUE,simplifyDataFrame = TRUE)
+  datasource$unifiedTaxonomyIds=NULL
+  datasource$unifiedTaxonomies=NULL
   datasource_l<-lapply(datasource, flatten)
   datasource<-do.call(data.frame,datasource_l)
   rm(datasource_l)
