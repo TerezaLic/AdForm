@@ -205,7 +205,7 @@ get_report_datausage<-function(endpoint){
   datasource[sapply(datasource, is.integer)]<-lapply(datasource[sapply(datasource, is.integer)], as.factor)
   # subset<-datasource%>%select(1:22,24,40:46)
   subset<-select(datasource,-impressions,-revenue,-revenueInCampaignCurrency,-revenueInAdvertiserCurrency,-revenueInPartnerPlatformCurrency,-revenueInEuro,-dataProviderRevenue,-dataProviderRevenueInCampaignCurrency,-dataProviderRevenueInAdvertiserCurrency,-dataProviderRevenueInPartnerPlatformCurrency,-dataProviderRevenueInEuro,-adformRevenue,-adformRevenueInCampaignCurrency,-adformRevenueInAdvertiserCurrency
-,-adformRevenueInPartnerPlatformCurrency,-adformRevenueInEuro,)
+,-adformRevenueInPartnerPlatformCurrency,-adformRevenueInEuro)
   datasource2<-ddply(datasource,.(key),numcolwise(sum))
   datasource2<-datasource2%>%left_join(subset, by=c("key"="key"))
   datasource2$key<-NULL
