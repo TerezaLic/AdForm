@@ -1,6 +1,9 @@
 
 #=======Install the libraries=========#
-# 23.8.2018
+require(devtools)
+#httr version 1.4.1 not working with Bearer Token
+install_version("httr", version = "1.4.0",quiet=TRUE)
+
 library(plyr)
 
 library(lubridate, warn.conflicts=FALSE, quietly=TRUE)
