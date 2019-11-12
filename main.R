@@ -2,7 +2,7 @@
 #=======Install the libraries=========#
 require(devtools)
 #httr,curl new versions not working with Bearer Token
-install_version("curl", version = "4.1", repos = "http://cran.us.r-project.org")
+install_version("curl", version = "4.1", repos = "http://cran.us.r-project.org",quiet = TRUE)
 install_version("httr", version = "1.4.0",repos = "http://cran.us.r-project.org",quiet = TRUE)
 
 library(plyr)
