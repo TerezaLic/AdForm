@@ -1,11 +1,6 @@
 
 #=======Install the libraries=========#
- require(devtools)
- #curl new versions not working libcurl 7.52
- install_version("curl", version = "4.1", repos = "http://cran.us.r-project.org",quiet = TRUE)
 
-
-library(curl,warn.conflicts=FALSE, quietly=TRUE)
 library(plyr)
 
 library(lubridate, warn.conflicts=FALSE, quietly=TRUE)
