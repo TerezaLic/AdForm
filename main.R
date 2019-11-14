@@ -45,7 +45,7 @@ url <- "https://api.adform.com/"
 req <- httr::POST(url,path="v1/dmp/token",body=list(grant_type="password",username=user,password=password),encode = "form")
 json <- httr::content(req, as = "text")
 returnData<-fromJSON(json)
-apiKey <- paste("Bearer ",returnData$access_token)
+apiKey <- paste("Bearer",returnData$access_token)
 
 # catch login errors
 if (req$status_code != 200) stop("unauthorized - verify username & password")
